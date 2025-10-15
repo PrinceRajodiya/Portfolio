@@ -1,0 +1,74 @@
+<template>
+  <template if:true={hasProjects}>
+    <!-- Right-pane content wrapper (centers content inside the right rail) -->
+    <section class="proj-wrap">
+      <div class="proj-inner">
+        <ul class="accordion" role="list">
+          <template for:each={rows} for:item="it" for:index="idx">
+            <li key={it.key} class={it.paneClass}>
+              <!-- Header -->
+              <button
+                class="head"
+                data-index={idx}
+                onclick={handleToggle}
+                aria-expanded={it.ariaExpanded}
+              >
+                <div class="head-main">
+                  <h3 class="name">{it.name}</h3>
+                  <span class="timeline">{it.dateRange}</span>
+                </div>
+                <span class="chev" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18">
+                    <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+              </button>
+
+              <!-- Panel -->
+              <div class="panel" data-index={idx}>
+                <div class="panel-inner">
+                  <ul class="chips" role="list">
+                    <template for:each={it.tech} for:item="t">
+                      <li key={t} class="chip">{t}</li>
+                    </template>
+                  </ul>
+
+                  <p class="desc">{it.description}</p>
+
+                  <template if:true={it.hasImpact}>
+                    <div class="impact">
+                      <div class="impact__label">Impact</div>
+
+                      <template if:true={it.impactIsList}>
+                        <ul class="impact__list">
+                          <template for:each={it.impactList} for:item="i">
+                            <li key={i}>{i}</li>
+                          </template>
+                        </ul>
+                      </template>
+
+                      <template if:false={it.impactIsList}>
+                        <p class="impact__text">{it.impactText}</p>
+                      </template>
+                    </div>
+                  </template>
+
+                  <template if:true={it.github}>
+                    <div class="foot">
+                      <a href={it.github} class="btn" target="_blank" rel="noopener">View on GitHub</a>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </section>
+  </template>
+
+  <template if:false={hasProjects}>
+    <p class="empty">No projects available</p>
+  </template>
+</template>

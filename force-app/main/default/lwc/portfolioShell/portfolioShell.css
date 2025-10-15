@@ -1,0 +1,203 @@
+:host {
+    display: block;
+    width: 100%;
+    height: 100dvh;
+    /* mobile-safe viewport height */
+    overflow: hidden;
+    box-sizing: border-box;
+    --radius: 16px;
+    --blur: 14px;
+    --glass-bg: rgba(255, 255, 255, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.30);
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    color: #0f1320;
+}
+
+/* Parent fills host */
+.wrap {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: stretch;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Grid (desktop) */
+.container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: clamp(260px, 22vw, 340px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: stretch;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.container.is-dimmed .right {
+    filter: none;
+}
+
+/* Glass panels */
+.glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    box-shadow: var(--shadow);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Columns */
+.left,
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Right scroll inside panel only */
+.right {
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+/* ---------- Hamburger button (only <1200px) ---------- */
+.hamburger {
+    position: sticky;
+    /* stays at top while scrolling */
+    top: 12px;
+    left: 12px;
+    align-self: flex-start;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, .35);
+    background: rgba(255, 255, 255, .6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .15);
+    display: none;
+    /* hidden by default (desktop) */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 4;
+}
+
+.hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #0b3b57;
+    margin: 3px 0;
+    border-radius: 2px;
+}
+
+@media (max-width: 1200px) {
+    .hamburger {
+        display: flex;
+    }
+}
+
+/* ---------- Drawer behavior under 1200px ---------- */
+@media (max-width: 1200px) {
+    .container {
+        grid-template-columns: 1fr;
+        /* right content full width */
+        grid-template-rows: 1fr;
+        gap: 12px;
+        padding: 8px;
+    }
+
+    /* Left as a slide-in drawer */
+    .left {
+        position: fixed;
+        inset: 0 auto 0 0;
+        /* left side */
+        width: min(86vw, 360px);
+        height: 100dvh;
+        z-index: 5;
+        transform: translateX(-100%);
+        transition: transform .35s cubic-bezier(.2, .7, .2, 1), opacity .35s ease;
+        opacity: .98;
+    }
+
+    .left.is-open {
+        transform: translateX(0);
+    }
+
+    /* Backdrop */
+    .backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, .35);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        border: none;
+        z-index: 3;
+    }
+
+    /* Right should not be dimmed/blocked */
+    .right {
+        z-index: 1;
+    }
+    .container {
+        padding: 8px;                 /* small internal padding for breathing space */
+        gap: 0;                       /* remove unnecessary gap causing frame */
+    }
+
+    .right.glass {
+        border: none;                 /* hide harsh 1px edge line */
+        border-radius: var(--radius); /* keep smooth glass curve */
+        box-shadow: var(--shadow);    /* maintain soft glass shadow */
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(var(--blur));
+        -webkit-backdrop-filter: blur(var(--blur));
+    }
+
+    .right {
+        margin: 0 auto;               /* center horizontally */
+        width: 96%;                   /* avoid overflow causing visible edge */
+        height: auto;                 /* allow full scroll without clipping */
+        padding: 16px 12px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        border-radius: inherit;
+    }
+}
+
+/* Small tweaks */
+.loading {
+    display: grid;
+    gap: 12px;
+    padding: 12px;
+}
+
+.bloc {
+    padding: 18px;
+}
+
+/* Accessibility focus ring */
+.left:focus-within,
+.right:focus-within {
+    outline: none;
+}

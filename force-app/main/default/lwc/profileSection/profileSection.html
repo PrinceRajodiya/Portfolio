@@ -1,0 +1,42 @@
+<template>
+    <section class="hero">
+        <template if:true={hasProfile}>
+        <div class="grid">
+            <!-- LEFT: copy and actions -->
+            <div class="left">
+            <p class="kicker">I'm</p>
+            <h1 class="title">{name}</h1>
+            <!-- Typed role -->
+            <h2 class="role" aria-live="polite">
+                <span class="typed" data-role="typed">{typedText}</span>
+                <span class="cursor" aria-hidden="true">|</span>
+            </h2>
+
+            <!-- Hidden roles source (CSV) -->
+            <span class="roles-src" hidden>
+                Salesforce Developer, Salesforce Administrator, Salesforce Consultant, Software Engineer, Software Developer
+            </span>
+
+            <div class="actions">
+                <a class="btn primary" href={resumeUrl} target="_blank" rel="noopener">Resume</a>
+                <a class="btn ghost" href="javascript:void(0)" onclick={goToContact}>Contact Me</a>
+            </div>
+            </div>
+
+            <!-- RIGHT: circular photo -->
+            <div class="right">
+            <template if:true={photoUrl}>
+                <img class="photo" src={photoUrl} alt={name}/>
+            </template>
+            <template if:false={photoUrl}>
+                <div class="avatar-fallback">{initials}</div>
+            </template>
+            </div>
+        </div>
+        </template>
+
+        <template if:false={hasProfile}>
+        <div class="loading">Loading…</div>
+        </template>
+    </section>
+</template>

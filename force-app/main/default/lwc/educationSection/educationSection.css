@@ -1,0 +1,219 @@
+:host{
+  /* center on large screens only; use dynamic viewport to avoid crop */
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  min-height:100dvh;          /* ✅ fixes mobile browser chrome issue */
+  box-sizing:border-box;
+  --radius:18px;
+  /* nice but optional background */
+  background: radial-gradient(100% 140% at 50% 50%, rgba(255,255,255,.6), rgba(240,250,255,.2));
+}
+
+/* On phones/tablets: don't force full-viewport centering */
+@media (max-width:900px){
+  :host{
+    align-items:flex-start;    /* let content start at the top */
+    min-height:auto;           /* allow page to grow naturally */
+    padding-top: max(16px, env(safe-area-inset-top)); /* iOS notch safe area */
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- Container ---------- */
+.edu{
+  width:100%;
+  max-width:1400px;
+  margin-inline:auto;
+  padding:48px 36px;
+  margin:10px;
+}
+
+/* ---------- Grid ---------- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:28px;
+  
+}
+@media (max-width:900px){
+  .grid{ grid-template-columns:1fr; }
+}
+
+/* ---------- Card ---------- */
+.card.glass{
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(14px);
+  box-shadow:0 18px 44px rgba(4,41,58,.14);
+  transition:transform .35s ease, box-shadow .35s ease;
+}
+.card.glass:hover{
+  transform:translateY(-6px);
+  box-shadow:0 28px 70px rgba(4,41,58,.25);
+}
+
+/* inner layout */
+.card-content{
+  display:grid;
+  grid-template-columns:5fr 7fr;
+  min-height:48vh;
+  padding: 15px;
+  align-items:center;     /* vertically center image + text */
+}
+@media (max-width:900px){
+  .card-content{
+    grid-template-columns:1fr;
+    min-height:auto;      /* ✅ prevent tall content from cropping */
+  }
+}
+
+/* ---------- Image ---------- */
+.card-image{
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Keep full logo visible; limit height on small screens to avoid overflow */
+.card-image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;     /* show whole image (no letter cropping) */
+  transition:transform .6s ease;
+}
+@media (max-width:900px){
+  .card-image{
+    aspect-ratio:16 / 9;  /* consistent height block on mobile */
+    max-height:60dvh;     /* ✅ prevents top/bottom clipping */
+  }
+}
+.card.glass:hover .card-image img{ transform:scale(1.03); }
+
+/* ---------- Body ---------- */
+.card-body{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:32px 38px;
+}
+.degree{ font-weight:800; color:#0b3b57; font-size:1.3rem; }
+.school{ font-weight:700; color:#0f2840; }
+
+/* ---------- Pills ---------- */
+.meta{
+  display:flex; flex-wrap:wrap; gap:14px; margin:20px 0; justify-content:center;
+}
+.pill{
+  padding:10px 22px; border-radius:999px; background:#fff; color:var(--theme-color);
+  font-weight:700; box-shadow:0 8px 18px rgba(0,0,0,.15); transition:all .3s ease;
+}
+.pill:hover{ background:var(--theme-color); color:#fff; transform:translateY(-2px); }
+
+/* ---------- Buttons ---------- */
+.card-actions{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
+.btn{ border:none; border-radius:999px; padding:10px 22px; font-weight:700; cursor:pointer; transition:all .3s ease; }
+.btn.primary:hover, .btn.secondary:hover{ transform:translateY(-2px); box-shadow:0 12px 26px rgba(0,0,0,.2); }
+
+/* ---------- Entrance Animations ---------- */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Apply the animations to cards based on position */
+.grid .card:nth-child(odd) {
+  animation: slideInLeft 1.8s ease-out forwards;
+}
+
+.grid .card:nth-child(even) {
+  animation: slideInRight 1.8s ease-out forwards;
+}
+
+/* Optional: delay effect for smoother staggered entrance */
+.grid .card:nth-child(odd) { animation-delay: 0.3s; }
+.grid .card:nth-child(even) { animation-delay: 0.6s; }
+
+/* On hover, preserve transition behavior */
+.card.glass {
+  will-change: transform, opacity;
+}
+
+/* ---------- Initial hidden state to prevent flash ---------- */
+.grid .card {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Offsets BEFORE animation (first paint) */
+.grid .card:nth-child(odd)  { transform: translateX(-80px); }
+.grid .card:nth-child(even) { transform: translateX( 80px); }
+
+/* Keyframes */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-80px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(80px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Start animations only after host is marked ready */
+:host(.ready) .grid .card:nth-child(odd)  {
+  animation: slideInLeft 1.8s ease-out forwards;
+}
+:host(.ready) .grid .card:nth-child(even) {
+  animation: slideInRight 1.8s ease-out forwards;
+}
+
+/* Gentle stagger (tweak as you like) */
+:host(.ready) .grid .card:nth-child(1) { animation-delay: .10s; }
+:host(.ready) .grid .card:nth-child(2) { animation-delay: .20s; }
+:host(.ready) .grid .card:nth-child(3) { animation-delay: .30s; }
+:host(.ready) .grid .card:nth-child(4) { animation-delay: .40s; }
+:host(.ready) .grid .card:nth-child(5) { animation-delay: .50s; }
+:host(.ready) .grid .card:nth-child(6) { animation-delay: .60s; }
+
+/* Mobile: single column feels nicer sliding up instead of left/right */
+@media (max-width:900px){
+  .grid .card { transform: translateY(30px); }
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  :host(.ready) .grid .card { animation: slideInUp 1.5s ease-out forwards; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .grid .card,
+  :host(.ready) .grid .card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

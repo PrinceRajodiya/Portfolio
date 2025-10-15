@@ -1,0 +1,42 @@
+<template>
+  <section class="edu">
+    <ul class="grid">
+      <template for:each={rows} for:item="it" for:index="idx">
+        <li key={it.key} class="card glass" style={it.cardTheme} data-idx={idx}>
+          <div class="card-content">
+            
+            <!-- Image -->
+            <div class="card-image">
+              <img
+                src={it.imagePrimary}
+                alt={it.school}
+                loading="lazy"
+                data-index={idx}
+                onerror={handleImgErr}
+                style={it.imgStyle}
+              />
+            </div>
+
+            <!-- Text -->
+            <div class="card-body">
+              <div class="card-head">
+                <h3 class="degree">{it.title}</h3>
+                <template if:true={it.school}>
+                  <p class="school">{it.school}</p>
+                </template>
+              </div>
+
+              <ul class="meta" role="list">
+                <template if:true={it.degree}><li class="pill">{it.degree}</li></template>
+                <template if:true={it.field}><li class="pill">{it.field}</li></template>
+                <template if:true={it.range}><li class="pill">{it.range}</li></template>
+                <template if:true={it.location}><li class="pill">{it.location}</li></template>
+              </ul>
+
+            </div>
+          </div>
+        </li>
+      </template>
+    </ul>
+  </section>
+</template>

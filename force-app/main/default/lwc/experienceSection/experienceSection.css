@@ -1,0 +1,185 @@
+/* ---- Section wrapper ---- */
+:host {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    width: 100%;
+}
+
+.experience {
+    width: 80%;             
+    max-width: 1200px;         
+    margin: 0 auto;           
+    padding: 45px 0 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;      
+    justify-content: center;
+    box-sizing: border-box;
+}
+.section-header p { margin: 0 0 6px; color:#EF233C; font-weight:600; letter-spacing:.02em; }
+.section-header h2 { margin:0; font-size:1.6rem; font-weight:800; }
+
+/* ---- Timeline (ported from your CSS) ---- */
+.experience .timeline { position: relative; width: 100%; }
+.experience .timeline::after {
+    content: ''; position: absolute; width: 2px; background: #120994;
+    top: 0; bottom: 0; left: 50%; margin-left: -1px;
+}
+
+.experience .timeline .timeline-item {
+    position: relative; background: inherit; width: 50%; margin-bottom: 30px;
+}
+.experience .timeline .timeline-item.left  { left: 0;   padding-right: 30px; }
+.experience .timeline .timeline-item.right { left: 50%; padding-left: 30px; }
+
+.experience .timeline .timeline-item::after {
+    content: ''; position: absolute; width: 16px; height: 16px; top: 48px; right: -8px;
+    background: #ffffff; border: 2px solid #050950; border-radius: 16px; z-index: 1;
+}
+.experience .timeline .timeline-item.right::after { left: -8px; right: auto; }
+
+.experience .timeline .timeline-item::before {
+    content: ''; position: absolute; width: 0; height: 0; top: 46px; right: 10px; z-index: 1;
+    border: 10px solid; border-color: transparent transparent transparent #1d91c7;
+}
+.experience .timeline .timeline-item.right::before {
+    left: 10px; right: auto; border-color: transparent #031427 transparent transparent;
+}
+
+.experience .timeline .timeline-date {
+    position: absolute; width: 100%; top: 44px; font-size: 16px; font-weight: 600;
+    color: #075d7c; text-transform: uppercase; letter-spacing: 1px; z-index: 1;
+}
+.experience .timeline .timeline-item.left  .timeline-date { text-align: left;  left:  calc(100% + 55px); }
+.experience .timeline .timeline-item.right .timeline-date { text-align: right; right: calc(100% + 55px); }
+
+.experience .timeline .timeline-text {
+    padding: 30px; background: #ffffff; position: relative;
+    border-right: 5px solid #dddddd; box-shadow: 0 0 60px rgba(0, 0, 0, .08);
+    border-radius: 8px;
+}
+.experience .timeline .timeline-item.right .timeline-text {
+    border-right: none; border-left: 5px solid #dddddd;
+}
+
+.experience .timeline .timeline-text h2 {
+    margin: 0 0 5px 0; font-size: 22px; font-weight: 600;
+}
+.experience .timeline .timeline-text h4 {
+    margin: 0 0 10px 0; font-size: 16px; font-style: italic; font-weight: 400;
+}
+.experience .timeline .timeline-text p { margin: 0; font-size: 16px; line-height:1.5; }
+
+/* keep everything you already have; just add the styles below */
+
+.subhead {
+    margin: 10px 0 6px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #04354A; /* Prussian Blue */
+    letter-spacing: .02em;
+}
+
+.bullets {
+    margin: 0 0 8px 0;
+    padding-left: 1.1rem;
+    list-style: disc;
+    color: #0f172a;
+}
+.bullets li {
+    margin: 2px 0;
+    line-height: 1.45;
+    font-size: 15px;
+}
+
+
+/* ---- Mobile ---- */
+@media (max-width: 767.98px) {
+    .experience {
+        width: 95%;             
+    }
+    .experience .timeline::after { left: 8px; }
+    .experience .timeline .timeline-item { width: 100%; padding-left: 38px; }
+    .experience .timeline .timeline-item.left  { padding-right: 0; }
+    .experience .timeline .timeline-item.right { left: 0%;  padding-left: 38px; }
+    .experience .timeline .timeline-item.left::after,
+    .experience .timeline .timeline-item.right::after { left: 0; right: auto; }
+    .experience .timeline .timeline-item.left::before,
+    .experience .timeline .timeline-item.right::before {
+        left: 18px; right: auto; border-color: transparent #dddddd transparent transparent;
+  }
+    .experience .timeline .timeline-item.left  .timeline-date,
+    .experience .timeline .timeline-item.right .timeline-date {
+        position: relative; top: 0; right: auto; left: 0; text-align: left; margin-bottom: 10px;
+  }
+    .experience .timeline .timeline-item.left  .timeline-text,
+    .experience .timeline .timeline-item.right .timeline-text {
+        border-right: none; border-left: 5px solid #dddddd;
+  }
+}
+
+/* ===== Experience / Certificates reveal animation ===== */
+
+/* Base: everything hidden first */
+.experience .timeline-item,
+.certificates .timeline-item {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.9s cubic-bezier(.2, .7, .2, 1);
+  will-change: transform, opacity;
+}
+
+/* Left side: fade-in from left */
+.experience .timeline-item.left.play,
+.certificates .timeline-item.left.play {
+  opacity: 1;
+  transform: translateX(0);
+  animation: fadeInLeft 1s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+/* Right side: fade-in from right */
+.experience .timeline-item.right.play,
+.certificates .timeline-item.right.play {
+  opacity: 1;
+  transform: translateX(0);
+  animation: fadeInRight 1s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+/* Certificates: slightly softer animation */
+.certificates .timeline-item.play {
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(.25, .8, .25, 1);
+}
+
+/* Keyframes */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px) translateY(20px); filter: blur(3px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px) translateY(20px); filter: blur(3px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* Optional: timeline connector glowing animation */
+.experience .timeline::after,
+.certificates .timeline::after {
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+@keyframes glowPulse {
+  from { background: #293ee0; box-shadow: 0 0 8px rgba(8, 4, 105, 0.6); }
+  to   { background: #27b3e5; box-shadow: 0 0 16px rgba(36, 83, 130, 0.8); }
+}
+
+/* Mobile-friendly: subtle translate only (no left/right slide) */
+@media (max-width: 768px) {
+  .experience .timeline-item.play,
+  .certificates .timeline-item.play {
+    animation: fadeUpSoft 0.9s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes fadeUpSoft {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: none; }
+  }
+}

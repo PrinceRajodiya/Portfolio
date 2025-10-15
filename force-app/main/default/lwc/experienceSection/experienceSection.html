@@ -1,0 +1,39 @@
+<template>
+    <section class="experience">
+        <div class="container">
+
+        <div class="timeline">
+            <template for:each={items} for:item="it">
+            <div key={it.key} class={it.containerClass}>
+                <div class="timeline-text">
+                <div class="timeline-date">{it.date}</div>
+
+                <h2>{it.h2}</h2>
+                <h4>{it.h4}</h4>
+
+                <!-- Responsibilities -->
+                <template if:true={it.hasResponsibilities}>
+                    <h5 class="subhead">Responsibilities</h5>
+                    <ul class="bullets">
+                    <template for:each={it.responsibilities} for:item="r">
+                        <li key={r}>{r}</li>
+                    </template>
+                    </ul>
+                </template>
+
+                <!-- Achievements -->
+                <template if:true={it.hasAchievements}>
+                    <h5 class="subhead">Key Achievements</h5>
+                    <ul class="bullets">
+                    <template for:each={it.achievements} for:item="a">
+                        <li key={a}>{a}</li>
+                    </template>
+                    </ul>
+                </template>
+                </div>
+            </div>
+            </template>
+        </div>
+        </div>
+    </section>
+</template>

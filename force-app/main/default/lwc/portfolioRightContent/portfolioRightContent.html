@@ -1,0 +1,48 @@
+<template>
+    <!-- PROFILE -->
+    <template if:true={isProfile}>
+        <div class="card">
+            <template if:true={isProfile}>
+                <c-profile-section
+                    profile={profile}
+                    photo-url={profilePhotoUrl}
+                    resume-url={resumeUrl}
+                    onopencontact={handleOpenContact}>
+                </c-profile-section>
+            </template>
+            <template if:false={profile}>
+                <p class="muted">Loading profile…</p>
+            </template>
+        </div>
+    </template>
+    <template if:true={isExperience}>
+        <template if:true={experience}>
+            <c-experience-section experience={experience}></c-experience-section>
+        </template>
+
+        <template if:false={experience}>
+            <div class="card">
+            <p class="muted">Loading experience...</p>
+            </div>
+        </template>
+    </template>
+    <template if:true={isProjects}>
+        <c-project-section
+            projects={projects}>
+        </c-project-section>
+    </template>
+    <template if:true={isSkills}>
+        <c-skills-section skills={skills}></c-skills-section>
+    </template>
+    <template if:true={isCertificates}>
+        <c-certification-section certificates={certificates}></c-certification-section>
+    </template>
+    <template if:true={isEducation}>
+        <c-education-section education={education}></c-education-section>
+    </template>
+    <template if:true={isContact}>
+        <c-contact-section ></c-contact-section>
+    </template>
+
+    <!-- (Education/Experience/Projects/Skills/Certificates sections as you had) -->
+</template>

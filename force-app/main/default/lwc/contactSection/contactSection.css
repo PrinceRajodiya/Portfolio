@@ -1,0 +1,139 @@
+:host{
+  display:block;
+  width:100%;
+  box-sizing:border-box;
+}
+
+/* Center the whole section horizontally AND vertically */
+.contact{
+  min-height:100dvh; /* dynamic viewport for mobile chrome */
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding: clamp(20px, 4vw, 48px);
+  background: radial-gradient(120% 160% at 50% 0%, rgba(255,255,255,.75), rgba(230,244,255,.35));
+}
+
+.wrap{
+  width:min(1200px, 96vw);
+  display:grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: clamp(16px, 3vw, 28px);
+}
+
+@media (max-width: 900px){
+  .wrap{ grid-template-columns: 1fr; }
+}
+
+/* GLASS cards */
+.card.glass{
+  background: rgba(255,255,255,.40);
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: 22px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 18px 44px rgba(4,41,58,.14);
+  padding: clamp(18px, 3vw, 26px);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.card.glass:hover{ transform: translateY(-4px); box-shadow:0 28px 70px rgba(4,41,58,.22); }
+
+.hd{
+  margin: 4px 0 16px 0;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  color: #0b3b57;
+  font-weight: 900;
+  letter-spacing:.2px;
+}
+
+/* ===== LEFT: details ===== */
+.list{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+.item{ display:flex; align-items:center; gap:12px; }
+.ico{ --size:28px; width:var(--size); height:var(--size); color:#0b3b57; }
+.ico.svg svg{ width:100%; height:100%; display:block; color:#0b3b57; }
+.link{ color:#0b3b57; font-weight:750; text-decoration:none; }
+.link:hover{ text-decoration:underline; }
+.note{ margin-top: 12px; color:#334155; }
+
+/* ===== RIGHT: form grid ===== */
+.form .grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.form .grid .wide{ grid-column: 1 / span 1; }
+@media (min-width: 901px){
+  .form .grid .wide{ grid-column: 1 / span 1; } /* keep two-column layout tidy */
+}
+@media (max-width: 700px){
+  .form .grid{ grid-template-columns: 1fr; }
+  .form .grid .wide{ grid-column:auto; }
+}
+
+/* ===== Glass fields (wrappers) ===== */
+.field.glassy{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.38));
+  border: 1px solid rgba(255,255,255,.85);
+  box-shadow: 0 10px 24px rgba(4,41,58,.10);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.field.glassy.tall{ padding: 12px; margin-top: 6px; }
+.field.glassy:focus-within{
+  border-color: rgba(13,157,218,.55);
+  box-shadow: 0 14px 30px rgba(13,157,218,.18), inset 0 0 0 1px rgba(13,157,218,.25);
+  transform: translateY(-1px);
+}
+
+/* Labels (outside lightning-input to keep control over layout) */
+.field .label{
+  font-size: .9rem;
+  font-weight: 800;
+  color: #0b3b57;
+  letter-spacing:.15px;
+}
+.field .req{ color:#e11d48; margin-left:4px; }
+
+/* Tame the Lightning inputs via tokens */
+lightning-input, lightning-textarea{
+  --slds-c-input-color-border: transparent;
+  --slds-c-input-color-background: transparent;
+  --slds-c-input-radius-border: 12px;
+  --slds-c-input-shadow-focus: 0 0 0 2px rgba(13,157,218,.25);
+  --slds-c-input-color-text: #0f172a;
+  --slds-c-textarea-color-border: transparent;
+  --slds-c-textarea-color-background: transparent;
+  --slds-c-textarea-radius-border: 12px;
+  --slds-c-textarea-shadow-focus: 0 0 0 2px rgba(13,157,218,.25);
+}
+
+/* actions */
+.actions{ display:flex; justify-content:flex-end; margin-top: 14px; }
+.btn{
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #0D9DDA, #0a86b8);
+  color: #fff;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.btn:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(13,157,218,.35); }
+.btn:disabled{ opacity:.6; cursor: not-allowed; }
+
+/* Entrance */
+.card.glass{ opacity:0; transform: translateY(22px); animation: rise .8s ease forwards; }
+.form.card.glass{ animation-delay: .12s; }
+@keyframes rise { to { opacity:1; transform:none; } }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .card.glass{ animation:none; opacity:1; transform:none; }
+}

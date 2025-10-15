@@ -1,0 +1,144 @@
+/* Host: let content breathe and never clip */
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  /* palette (keep yours) */
+  --blue-900:#04354A; --blue-800:#07587A; --blue-600:#0D9DDA; --blue-300:#58C6F5;
+}
+
+/* Wrapper: extra top padding and anchor offset */
+.skills-wrap {
+  width: 80%;
+  margin: 0 auto;
+  padding: 48px 24px 32px;           /* <-- more top so first row isn't cut */
+  scroll-margin-top: 88px;           /* <-- if you navigate with a fixed header */
+  box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 1rem;
+  align-items: center;
+}
+
+.title { text-align:center; font-weight:800; color:var(--blue-900); }
+
+.group { width: 100%; }
+.group:first-of-type { margin-top: 4px; }   /* tiny cushion for the first title */
+.group-title { font-weight:800; color:var(--blue-800); margin:.25rem 0 .6rem; }
+
+/* Square grid */
+.tile-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+/* === Tile === */
+.tile{
+  position: relative;
+  aspect-ratio: 1 / 1;
+  /* perfect centering for anything inside */
+  display:flex; align-items:center; justify-content:center;
+
+  text-align:center;
+  border-radius: 16px;
+  padding: 12px;
+  overflow: hidden;
+
+  /* glass base */
+  background: rgba(255,255,255,.30);
+  border: 1px solid rgba(255,255,255,.50);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+
+  /* text */
+  color:#04354A;
+  font-weight:700;
+  line-height:1.25;
+  font-size: .95rem;
+
+  /* smoother, slower default transitions */
+  transition:
+    transform 1.28s cubic-bezier(.2,.7,.2,1),
+    box-shadow 1.28s cubic-bezier(.2,.7,.2,1),
+    background .88s cubic-bezier(.2,.7,.2,1),
+    color .88s cubic-bezier(.2,.7,.2,1),
+    border-color .88s cubic-bezier(.2,.7,.2,1);
+
+  /* reveal animation defaults */
+  opacity: 0;
+  transform: translateY(16px) scale(.98);
+  will-change: transform, opacity;
+  --accent: #28B6F2;
+  --accent-soft: rgba(40,182,242,.14);
+}
+
+/* content element (keeps two-line clamp but stays centered) */
+.tile-text{
+  /* clamp to 2 lines while centered */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
+  max-width: 96%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+  margin: 0 auto;
+}
+
+/* in-view reveal */
+.tile.in{
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 1.50s ease var(--reveal-delay, 0ms),
+    transform 1.70s ease var(--reveal-delay, 0ms),
+    box-shadow .88s cubic-bezier(.2,.7,.2,1),
+    background .88s cubic-bezier(.2,.7,.2,1),
+    color .88s cubic-bezier(.2,.7,.2,1),
+    border-color .88s cubic-bezier(.2,.7,.2,1);
+}
+
+/* Hover: slower, smoother, a touch of scale & color fill */
+.tile:hover{
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    color-mix(in srgb, var(--accent) 75%, #ffffff) 100%
+  );
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--accent) 35%, #0000);
+  transform: translateY(-3px) scale(1.02);
+  transition-duration: .48s;
+}
+
+/* Ambient tint while idle */
+.tile::after{
+  content:"";
+  position:absolute; inset:0;
+  background: radial-gradient(120% 120% at 0% 100%, var(--accent-soft) 0%, transparent 45%);
+  pointer-events:none;
+}
+
+/* Rotating accents */
+.tile-grid .tile:nth-child(6n + 1){ --accent:#28B6F2; --accent-soft:rgba(40,182,242,.14); }
+.tile-grid .tile:nth-child(6n + 2){ --accent:#9E86FF; --accent-soft:rgba(158,134,255,.16); }
+.tile-grid .tile:nth-child(6n + 3){ --accent:#59D5A7; --accent-soft:rgba(89,213,167,.16); }
+.tile-grid .tile:nth-child(6n + 4){ --accent:#FFA883; --accent-soft:rgba(255,168,131,.16); }
+.tile-grid .tile:nth-child(6n + 5){ --accent:#58C6F5; --accent-soft:rgba(88,198,245,.16); }
+.tile-grid .tile:nth-child(6n)     { --accent:#0A7AAA; --accent-soft:rgba(10,122,170,.15); }
+
+/* Responsive */
+@media (max-width: 900px){
+  .skills-wrap{ width:88%; }
+  .tile-grid{ grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+}
+@media (max-width: 560px){
+  .skills-wrap{ width:94%; padding:40px 16px 24px; }
+  .tile-grid{ grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px; }
+  .tile{ border-radius: 14px; font-size:.9rem; }
+}

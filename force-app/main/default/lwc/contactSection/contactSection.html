@@ -1,0 +1,113 @@
+<template>
+  <section class="contact">
+    <div class="wrap">
+      <aside class="card glass details">
+        <h2 class="hd">Get in touch</h2>
+
+        <ul class="list" role="list">
+          <li class="item">
+            <lightning-icon class="ico" icon-name="utility:call" size="small" alternative-text="Phone"></lightning-icon>
+            <a href="tel:+1-312-684-8746" class="link">+1 (312) 684-8746</a>
+          </li>
+          <li class="item">
+            <lightning-icon class="ico" icon-name="utility:email" size="small" alternative-text="Email"></lightning-icon>
+            <a href="mailto:rajodiyaprince1015@gmail.com" class="link">rajodiyaprince1015@gmail.com</a>
+          </li>
+          <li class="item">
+            <span class="ico svg">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M20.45 20.45h-3.55v-5.59c0-1.33-.47-2.23-1.65-2.23-.9 0-1.44.61-1.68 1.2-.09.22-.11.53-.11.84v5.78h-3.55s.05-9.39 0-10.37h3.55v1.47c.47-.72 1.31-1.75 3.2-1.75 2.34 0 4.16 1.53 4.16 4.83v5.82zM6.1 8.6c-1.17 0-1.93-.78-1.93-1.76 0-.99.77-1.76 1.96-1.76s1.93.77 1.95 1.76c0 .98-.76 1.76-1.98 1.76zM4.36 20.45H7.9V10.08H4.36v10.37zM22 2H2v20h20V2z"/>
+              </svg>
+            </span>
+            <a href="https://www.linkedin.com/in/rajodiya-prince" target="_blank" rel="noopener" class="link">
+              LinkedIn Profile
+            </a>
+          </li>
+          <li class="item">
+            <span class="ico svg">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 2l8.5 4.9v9.8L12 22l-8.5-4.9V6.9L12 2z" fill="currentColor" opacity=".18"/>
+                <path d="M6 15.5c1.6-2.3 3.6-3.4 6-3.4s4.4 1.1 6 3.4c-2-1-4-1.6-6-1.6s-4 .6-6 1.6zm3-4.8c.9-1.3 2-2 3-2s2.1.7 3 2c-1-.5-2-.7-3-.7s-2 .2-3 .7z"/>
+              </svg>
+            </span>
+            <a href="https://www.salesforce.com/trailblazer/rprince30" target="_blank" rel="noopener" class="link">
+              Trailhead Profile
+            </a>
+          </li>
+        </ul>
+
+        <p class="note">Prefer email? I usually respond within 24 hours.</p>
+      </aside>
+
+      <div class="card glass form">
+        <h2 class="hd">Send an inquiry</h2>
+
+        <form onsubmit={handleSubmit} novalidate>
+          <div class="grid">
+            <label class="field glassy">
+              <span class="label">First Name<span aria-hidden="true" class="req">*</span></span>
+              <lightning-input
+                variant="label-hidden"
+                type="text"
+                name="firstName"
+                value={form.firstName}
+                required
+                onchange={handleChange}> </lightning-input>
+            </label>
+
+            <label class="field glassy">
+              <span class="label">Last Name<span aria-hidden="true" class="req">*</span></span>
+              <lightning-input
+                variant="label-hidden"
+                type="text"
+                name="lastName"
+                value={form.lastName}
+                required
+                onchange={handleChange}> </lightning-input>
+            </label>
+
+            <label class="field glassy wide">
+              <span class="label">Email<span aria-hidden="true" class="req">*</span></span>
+              <lightning-input
+                variant="label-hidden"
+                type="email"
+                name="email"
+                value={form.email}
+                required
+                onchange={handleChange}> </lightning-input>
+            </label>
+
+            <label class="field glassy">
+              <span class="label">Phone Number</span>
+              <lightning-input
+                variant="label-hidden"
+                type="tel"
+                name="phone"
+                value={form.phone}
+                message-when-pattern-mismatch="Enter a valid phone number"
+                pattern="^\\+?[0-9 .()-]{7,}$"
+                onchange={handleChange}> </lightning-input>
+            </label>
+          </div>
+
+          <label class="field glassy tall">
+            <span class="label">Inquiry Reason<span aria-hidden="true" class="req">*</span></span>
+            <lightning-textarea
+              variant="label-hidden"
+              name="description"
+              value={form.description}
+              maxlength="3000"
+              required
+              onchange={handleChange}> </lightning-textarea>
+          </label>
+
+          <div class="actions">
+            <button class="btn" type="submit" disabled={submitting}>
+              {submitLabel}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</template>

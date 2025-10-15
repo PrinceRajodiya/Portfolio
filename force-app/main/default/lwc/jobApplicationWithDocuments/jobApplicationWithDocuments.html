@@ -1,0 +1,54 @@
+<template>
+    <div style="display: flex; justify-content: center; align-items: flex-start; padding: 1rem;">
+        <div style="width: 100%; max-width: 600px;">
+            <lightning-card title="New Job Application">
+                <template if:true={showForm}>
+                    <div class="slds-p-around_medium">
+                        <lightning-input label="Job Title" name="jobTitle" value={jobTitle} onchange={handleChange}></lightning-input>
+                        <lightning-input label="Company Name" name="companyName" value={companyName} onchange={handleChange}></lightning-input>
+                        <lightning-input type="date" label="Application Date" name="applicationDate" value={applicationDate} onchange={handleChange}></lightning-input>
+                        <lightning-input label="Location" name="location" value={location} onchange={handleChange}></lightning-input>
+                        <lightning-input label="Pay" name="pay" value={pay} onchange={handleChange}></lightning-input>
+                        <lightning-textarea label="Job Description" name="jobDescription" value={jobDescription} onchange={handleChange}></lightning-textarea>
+                        
+                        <lightning-combobox
+                            label="Stage"
+                            name="stage"
+                            value={stage}
+                            options={stageOptions}
+                            onchange={handleChange}>
+                        </lightning-combobox>
+    
+                        <lightning-combobox
+                            label="Select Resume"
+                            name="selectedResumeId"
+                            value={selectedResumeId}
+                            options={resumeOptions}
+                            onchange={handleChange}>
+                        </lightning-combobox>
+    
+                        <lightning-combobox
+                            label="Select Cover Letter"
+                            name="selectedCoverLetterId"
+                            value={selectedCoverLetterId}
+                            options={coverLetterOptions}
+                            onchange={handleChange}>
+                        </lightning-combobox>
+    
+                        <lightning-dual-listbox
+                            name="selectedCertificateIds"
+                            label="Select Certificates"
+                            source-label="Available"
+                            selected-label="Selected"
+                            options={certificateOptions}
+                            value={selectedCertificateIds}
+                            onchange={handleChange}>
+                        </lightning-dual-listbox>
+    
+                        <lightning-button class="slds-m-top_medium" variant="brand" label="Submit" onclick={handleSubmit}></lightning-button>
+                    </div>
+                </template>
+            </lightning-card>
+        </div>
+    </div>
+</template>

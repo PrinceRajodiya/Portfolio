@@ -1,0 +1,25 @@
+<template>
+    <section class="skills-wrap">
+
+        <template if:true={hasGroups}>
+        <template for:each={groups} for:item="g">
+            <div key={g.key} class="group">
+            <h3 class="group-title">{g.label}</h3>
+
+                <div class="tile-grid">
+                <template for:each={g.items} for:item="s">
+                    <div key={s.key} class="tile" title={s.title}>
+                    <span class="tile-text">{s.name}</span>
+                    </div>
+                </template>
+                </div>
+
+            </div>
+        </template>
+        </template>
+
+        <template if:false={hasGroups}>
+        <p class="empty">No skills to show.</p>
+        </template>
+    </section>
+</template>

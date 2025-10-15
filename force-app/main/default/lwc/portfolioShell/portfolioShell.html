@@ -1,0 +1,62 @@
+<template>
+  <section class="wrap" style={wrapStyle}>
+    <div class={containerClass}>
+      <!-- Backdrop for mobile drawer -->
+      <template if:true={isMenuOpen}>
+        <button class="backdrop" onclick={closeMenu} aria-label="Close menu backdrop"></button>
+      </template>
+
+      <!-- Left: nav (desktop inline / mobile drawer) -->
+      <aside class={leftClass} aria-hidden={leftAriaHidden} aria-label="Primary navigation">
+        <c-portfolio-left-nav
+          ontabselect={handleTabSelect}
+          profile={profile}>
+        </c-portfolio-left-nav>
+      </aside>
+
+      <!-- Right: content -->
+      <main class="right glass" role="main">
+        <!-- Hamburger (only visible on <1200px) -->
+        <button
+          class="hamburger"
+          onclick={toggleMenu}
+          aria-label="Open navigation"
+          aria-controls="drawer"
+          aria-expanded={isMenuOpenString}
+        >
+          <span></span><span></span><span></span>
+        </button>
+
+        <!-- Loading / error states -->
+        <template if:false={isReady}>
+          <div class="loading">
+            <div class="glass bloc">Loading…</div>
+            <div class="glass bloc">
+              <template if:true={error}>
+                <p><strong>Error:</strong> {error.body.message}</p>
+              </template>
+              <template if:false={error}>
+                <p>Fetching your portfolio…</p>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <!-- Main content -->
+        <template if:true={isReady}>
+          <c-portfolio-right-content
+            selected-tab={selectedTab}
+            ontabchange={handleTabChange}
+            profile={profile}
+            education={education}
+            experience={experience}
+            projects={projects}
+            skills={skills}
+            certificates={certificates}
+            error={error}>
+          </c-portfolio-right-content>
+        </template>
+      </main>
+    </div>
+  </section>
+</template>

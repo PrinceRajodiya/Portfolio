@@ -1,0 +1,34 @@
+<template>
+    <lightning-card title="Application Documents">
+        <lightning-tabset>
+            <lightning-tab label="Resume">
+                <template if:true={resumeDocUrl}>
+                    <iframe src={resumeDocUrl} width="100%" height="400px" style="border: 1px solid #ccc;"></iframe>
+                </template>
+                <template if:false={resumeDocUrl}>
+                    <p class="slds-p-around_medium">No resume linked to this opportunity.</p>
+                </template>
+            </lightning-tab>
+
+            <lightning-tab label="Cover Letter">
+                <template if:true={coverLetterDocUrl}>
+                    <iframe src={coverLetterDocUrl} width="100%" height="400px" style="border: 1px solid #ccc;"></iframe>
+                </template>
+                <template if:false={coverLetterDocUrl}>
+                    <p class="slds-p-around_medium">No cover letter linked to this opportunity.</p>
+                </template>
+            </lightning-tab>
+
+            <lightning-tab label="Certificates">
+                <template if:true={certificateUrls.length}>
+                    <template for:each={certificateUrls} for:item="certUrl">
+                        <iframe key={certUrl} src={certUrl} width="100%" height="300px" class="slds-m-bottom_medium" style="border:1px solid #ccc;"></iframe>
+                    </template>
+                </template>
+                <template if:false={certificateUrls.length}>
+                    <p class="slds-p-around_medium">No certificates linked to this opportunity.</p>
+                </template>
+            </lightning-tab>
+        </lightning-tabset>
+    </lightning-card>
+</template>

@@ -1,0 +1,28 @@
+<template>
+    <section class="experience"> <!-- reuse same section styles -->
+        <div class="container">
+
+        <div class="timeline">
+            <template for:each={items} for:item="it">
+            <div key={it.key} class={it.containerClass}>
+                <div class="timeline-text">
+                <div class="timeline-date">{it.date}</div>
+                <h2>{it.h2}</h2>
+                <h4>{it.h4}</h4>
+                <template if:true={it.body}>
+                    <p>{it.body}</p>
+                </template>
+                <template if:true={it.url}>
+                <p class="credential-wrapper">
+                    <a href={it.url} target="_blank" rel="noopener" class="credential-link">
+                    View Credential
+                    </a>
+                </p>
+                </template>
+                </div>
+            </div>
+            </template>
+        </div>
+        </div>
+    </section>
+</template>

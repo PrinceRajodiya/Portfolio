@@ -1,0 +1,263 @@
+/* EXACTLY mirrors your experience styles so the spine & dots line up */
+
+:host {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    width: 100%;
+}
+
+.experience {
+    width: 80%;                     
+    margin: 0 auto;           
+    padding: 45px 0 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;      
+    justify-content: center;
+    box-sizing: border-box;
+}
+.section-header { margin-bottom: 16px; }
+.section-header h2 { margin:0; font-size:1.6rem; font-weight:800; }
+
+/* Timeline + center spine */
+.experience .timeline { position: relative; width: 100%; }
+.experience .timeline::after {
+  content: ''; position: absolute; width: 2px; background: #120994;
+  top: 0; bottom: 0; left: 50%; margin-left: -1px;
+}
+
+/* Items */
+.experience .timeline .timeline-item {
+  position: relative; background: inherit; width: 50%; margin-bottom: 30px;
+}
+.experience .timeline .timeline-item.left  { left: 0;   padding-right: 30px; }
+.experience .timeline .timeline-item.right { left: 50%; padding-left: 30px; }
+
+/* Dot */
+.experience .timeline .timeline-item::after {
+  content: ''; position: absolute; width: 16px; height: 16px; top: 48px; right: -8px;
+  background: #ffffff; border: 2px solid #050950; border-radius: 16px; z-index: 1;
+}
+.experience .timeline .timeline-item.right::after { left: -8px; right: auto; }
+
+/* Arrow pointer */
+.experience .timeline .timeline-item::before {
+  content: ''; position: absolute; width: 0; height: 0; top: 46px; right: 10px; z-index: 1;
+  border: 10px solid; border-color: transparent transparent transparent #1d91c7;
+}
+.experience .timeline .timeline-item.right::before {
+  left: 10px; right: auto; border-color: transparent #031427 transparent transparent;
+}
+
+/* Date & card */
+.experience .timeline .timeline-date {
+  position: absolute; width: 100%; top: 44px; font-size: 16px; font-weight: 600;
+  color: #075d7c; text-transform: uppercase; letter-spacing: 1px; z-index: 1;
+}
+.experience .timeline .timeline-item.left  .timeline-date { text-align: left;  left:  calc(100% + 55px); }
+.experience .timeline .timeline-item.right .timeline-date { text-align: right; right: calc(100% + 55px); }
+
+/* Glassmorphism certificate card */
+.experience .timeline .timeline-text {
+  position: relative;
+  padding: 22px 24px;
+
+  /* glass */
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 16px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .14);
+
+  /* remove hard side bars from old style */
+  border-right: none;
+  border-left: none;
+
+  /* nicer inner contrast on text */
+  color: #0f172a;
+}
+
+.experience .timeline .timeline-item.right .timeline-text {
+  /* keep the same visual on both sides */
+  border-left: none;
+}
+
+/* Optional: subtle blue glow on hover */
+.experience .timeline .timeline-text:hover {
+  box-shadow: 0 12px 30px rgba(13, 157, 218, .20);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Headings inside glass */
+.experience .timeline .timeline-text h2 {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #04354A; /* Prussian Blue */
+}
+.experience .timeline .timeline-text h4 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+  color: #07587A; /* Sea Blue */
+}
+.experience .timeline .timeline-text p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #0f172a;
+}
+
+/* Keep your existing dot & arrow; just soften arrow color a bit */
+.experience .timeline .timeline-item::before {
+  border: 10px solid;
+  border-color: transparent transparent transparent rgba(255,255,255,0.18);
+  /* the blur behind will show through */
+}
+.experience .timeline .timeline-item.right::before {
+  border-color: transparent rgba(255,255,255,0.18) transparent transparent;
+}
+
+/* Credential link container */
+.credential-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 12px;
+}
+
+/* Glassy white pill-like card link */
+.credential-link {
+  display: inline-block;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1.5px solid #0A7AAA; /* Cerulean blue border */
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #0A7AAA; /* Blue text */
+  text-decoration: none !important;  /* force-remove underline */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
+}
+
+.credential-link:hover,
+.credential-link:focus,
+.credential-link:active {
+  background: rgba(10, 122, 170, 0.08);
+  border-color: #0A7AAA;
+  color: #0A7AAA;
+  text-decoration: none !important; /* remove underline on hover/focus */
+  box-shadow: 0 6px 20px rgba(10, 122, 170, 0.25);
+  transform: translateY(-1px);
+}
+
+
+
+/* Fallback for browsers without backdrop-filter */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .experience .timeline .timeline-text {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+}
+
+
+.experience .timeline .timeline-text h2 {
+  margin: 0 0 5px 0; font-size: 22px; font-weight: 600;
+}
+.experience .timeline .timeline-text h4 {
+  margin: 0 0 10px 0; font-size: 16px; font-style: italic; font-weight: 400;
+}
+.experience .timeline .timeline-text p { margin: 0; font-size: 16px; line-height:1.5; }
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  .experience .timeline::after { left: 8px; }
+  .experience .timeline .timeline-item { width: 100%; padding-left: 38px; }
+  .experience .timeline .timeline-item.left  { padding-right: 0; }
+  .experience .timeline .timeline-item.right { left: 0%;  padding-left: 38px; }
+  .experience .timeline .timeline-item.left::after,
+  .experience .timeline .timeline-item.right::after { left: 0; right: auto; }
+  .experience .timeline .timeline-item.left::before,
+  .experience .timeline .timeline-item.right::before {
+    left: 18px; right: auto; border-color: transparent #dddddd transparent transparent;
+  }
+  .experience .timeline .timeline-item.left  .timeline-date,
+  .experience .timeline .timeline-item.right .timeline-date {
+    position: relative; top: 0; right: auto; left: 0; text-align: left; margin-bottom: 10px;
+  }
+  .experience .timeline .timeline-item.left  .timeline-text,
+  .experience .timeline .timeline-item.right .timeline-text {
+    border-right: none; border-left: 5px solid #dddddd;
+  }
+}
+
+/* ===== Experience / Certificates reveal animation ===== */
+
+/* Base: everything hidden first */
+.experience .timeline-item,
+.certificates .timeline-item {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.9s cubic-bezier(.2, .7, .2, 1);
+  will-change: transform, opacity;
+}
+
+/* Left side: fade-in from left */
+.experience .timeline-item.left.play,
+.certificates .timeline-item.left.play {
+  opacity: 1;
+  transform: translateX(0);
+  animation: fadeInLeft 1s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+/* Right side: fade-in from right */
+.experience .timeline-item.right.play,
+.certificates .timeline-item.right.play {
+  opacity: 1;
+  transform: translateX(0);
+  animation: fadeInRight 1s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+/* Certificates: slightly softer animation */
+.certificates .timeline-item.play {
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(.25, .8, .25, 1);
+}
+
+/* Keyframes */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px) translateY(20px); filter: blur(3px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px) translateY(20px); filter: blur(3px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* Optional: timeline connector glowing animation */
+.experience .timeline::after,
+.certificates .timeline::after {
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+@keyframes glowPulse {
+  from { background: #293ee0; box-shadow: 0 0 8px rgba(8, 4, 105, 0.6); }
+  to   { background: #27b3e5; box-shadow: 0 0 16px rgba(36, 83, 130, 0.8); }
+}
+
+/* Mobile-friendly: subtle translate only (no left/right slide) */
+@media (max-width: 768px) {
+  .experience .timeline-item.play,
+  .certificates .timeline-item.play {
+    animation: fadeUpSoft 0.9s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes fadeUpSoft {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
